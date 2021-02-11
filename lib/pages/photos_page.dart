@@ -17,19 +17,14 @@ class PhotosPage extends StatefulWidget {
 
 class PhotosPageState extends State<PhotosPage> {
   ScrollController _controller;
-  int x = 0;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-    print("Fetching images");
-    Future.delayed(new Duration(milliseconds: 1500), () {
-      ImagesAction.of(context).fetchImages();
-      print("Fetched images");
-    });
+    ImagesAction.of(context).fetchImages();
+
   }
 
   @override
@@ -46,7 +41,6 @@ class PhotosPageState extends State<PhotosPage> {
             return Container(child: Text("Empty list"));
           }
           return Column(children: [
-            Text("${x}"),
             Expanded(
               child: ListView.builder(
                 controller: _controller,
@@ -105,7 +99,7 @@ class PhotosPageState extends State<PhotosPage> {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       //reached bottom , fetch new images
-      print("Fetching new images");
+      print("Scrolled to bottom");
       ImagesAction.of(context).fetchImages();
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&

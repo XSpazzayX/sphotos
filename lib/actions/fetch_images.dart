@@ -12,8 +12,9 @@ class ImagesAction {
   factory ImagesAction.of(BuildContext context){
     return ImagesAction(StaticProvider.of(context),StaticProvider.of(context));
   }
-  Future<void> fetchImages() async{
-      print("Fetching images");
-      _photoService.fetchNewImages(_photoStore.pageNum+1);
+  Future<void> fetchImages([int page]) async{
+
+      _photoService.fetchNewImages(_photoStore.pageNum);
+      _photoStore.pageNum++;
   }
 }

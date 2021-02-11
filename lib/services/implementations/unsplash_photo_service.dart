@@ -19,17 +19,13 @@ class UnsplashPhotoService implements PhotoService {
     Dio dio = Dio();
     dio.interceptors.add(dioCacheManager.interceptor);
     final response = await dio.get("https://api.unsplash.com/photos",
-        queryParameters: {"client_id": _apiKey, "page": page, "per_page": 5},
+        queryParameters: {"client_id": _apiKey, "page": page, "per_page": 10},
         options: cacheOptions);
-    print(response.data.length);
     final List<dynamic> images =
         response.data;
-    print(images.runtimeType);
     List<ImageE> imageList = images.map((image){
-      print(image);
       return ImageE.fromJson(image);
     }).toList();
-    print(imageList);
     images$.add(imageList);
   }
 

@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
           } else if (o.isFirstTime && !o.isConnected) {
             return Center(child: Text("Please turn on your internet."));
           } else {
-            Future.microtask(() => Navigator.push(
+            Future.microtask(() => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => PhotosPage())
             ));
