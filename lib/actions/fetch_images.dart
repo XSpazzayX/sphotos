@@ -13,6 +13,7 @@ class ImagesAction {
     return ImagesAction(StaticProvider.of(context),StaticProvider.of(context));
   }
   Future<void> fetchImages() async{
-      _photoService.fetchNewImages();
+      print("Fetching images");
+      _photoService.fetchNewImages(_photoStore.pageNum+1);
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'package:sphotos/entities/image_e.dart';
@@ -10,14 +12,26 @@ class UnsplashPhotoService implements PhotoService {
   final PublishSubject<List<ImageE>> images$;
 
   @override
-  Future<void> fetchNewImages() async {
-    final response = await http.get(
-        'https://api.unsplash.com/photos?client_id=$_apiKey&page=1&per_page=5');
-    final List<Map<String, dynamic>> images = jsonDecode(response.body);
-    List<ImageE> imageList = [for (var image in images) ImageE.fromJson(image)];
+  Future<void> fetchNewImages(int page) async {
+    print("In service fetching images");
+    final DioCacheManager dioCacheManager = DioCacheManager(CacheConfig(baseUrl: "https://api.unsplash.com/photos"));
+    final Options cacheOptions = buildCacheOptions(Duration(days: 7));
+    Dio dio = Dio();
+    dio.interceptors.add(dioCacheManager.interceptor);
+    final response = await dio.get("https://api.unsplash.com/photos",
+        queryParameters: {"client_id": _apiKey, "page": page, "per_page": 5},
+        options: cacheOptions);
+    print(response.data.length);
+    final List<dynamic> images =
+        response.data;
+    print(images.runtimeType);
+    List<ImageE> imageList = images.map((image){
+      print(image);
+      return ImageE.fromJson(image);
+    }).toList();
     print(imageList);
     images$.add(imageList);
   }
 
-  UnsplashPhotoService(this.images$);
+  UnsplashPhotoService(this.images$) {}
 }

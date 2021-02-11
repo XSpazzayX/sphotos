@@ -5,6 +5,7 @@ import 'package:sphotos/stores/photo_store.dart';
 
 List<SingleChildWidget> observables = [
   StreamProvider<List<ImageC>>(
-    create: (context) => Provider.of<PhotoStore>(context,listen: false).imagesO$
+    create: (context) => Provider.of<PhotoStore>(context,listen: false).imagesO$,
+    lazy: false,
   )
 ];

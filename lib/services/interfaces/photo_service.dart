@@ -1,3 +1,3 @@
 abstract class PhotoService{
-  Future<void> fetchNewImages();
+  Future<void> fetchNewImages(int page);
 }
