@@ -12,7 +12,7 @@ List<SingleChildWidget> stores = [
   ),
   Provider<ConnectionStore>(
       lazy: false,
-      create: (context) => ConnectionStore(StaticProvider.of(context)),
+      create: (context) => ConnectionStore(StaticProvider.of(context),StaticProvider.of(context)),
       dispose: (_, store) => store.dispose()
-  )
+  ),
 ];

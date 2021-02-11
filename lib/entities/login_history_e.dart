@@ -1,5 +1,5 @@
 class LoginHistoryE{
-  final isFirstTime;
+  final bool isFirstTime;
 
   LoginHistoryE(this.isFirstTime);
 }

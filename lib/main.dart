@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:sphotos/pages/home_page.dart';
 import 'package:sphotos/pages/photos_page.dart';
 import 'package:sphotos/providers/provider.dart';
-
 void main() {
   Provider.debugCheckInvalidValueType = <T>(T value) {
     return true;

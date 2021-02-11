@@ -1,5 +1,5 @@
 class ConnectionC{
   final bool isConnected;
-
-  ConnectionC(this.isConnected);
+  final bool isFirstTime;
+  ConnectionC(this.isConnected, this.isFirstTime);
 }
