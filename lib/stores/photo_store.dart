@@ -14,13 +14,10 @@ class PhotoStore{
       final newImages = imagesE.map((imageE){
         ImageC image = ImageC.fromImageE(imageE);
         return image;
-      });
-      imagesO$.value.addAll(newImages);
-      imagesO$.add(imagesO$.value);
-      imagesO$.listen((value) {
-        print("i got here ${value.length}");
-      });
-      print("updateObservable");
+      }).toList();
+      List<ImageC> currentValue = imagesO$.value.toList(growable: true);
+      currentValue.addAll(newImages);
+      imagesO$.add(currentValue);
       _pageNum +=1;
     });
   }

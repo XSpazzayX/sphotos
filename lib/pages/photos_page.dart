@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sphotos/actions/fetch_images.dart';
 import 'package:sphotos/consumables/image_c.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:sphotos/pages/photo_page.dart';
 
 class PhotosPage extends StatefulWidget {
   @override
@@ -52,25 +53,31 @@ class PhotosPageState extends State<PhotosPage> {
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    key: ValueKey(images[index].imageUrl),
-                    child: Column(children: [
-                      Hero(
-                          tag: "PhotoHero",
-                          child: GestureDetector(
-                            onTap: () => print("tapped"),
-                            child: CachedNetworkImage(
-                              width: 150,
-                              height: 150,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              imageUrl: images[index].imageUrl,
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          )),
-                      Text(images[index].authorUsername)
-                    ]),
-                  );
+                    padding: EdgeInsets.only(top: 20),
+                      color: Colors.red,
+                      width: double.infinity,
+                      height:500,
+                      child: GestureDetector(
+                          onLongPress: () => showImageDetails(images[index]),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Row(children: [
+                                Expanded(
+                                  child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    imageUrl: images[index].thumbnailUrl,
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  ),
+                                ),
+                              ])),
+                              Text("${images[index].authorUsername}"),
+                            ],
+                          )));
                 },
               ),
             )
@@ -80,7 +87,12 @@ class PhotosPageState extends State<PhotosPage> {
     );
   }
 
-  void showImageDetails(ImageC imageC) {}
+  void showImageDetails(ImageC imageC) {
+    print("pressed");
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return PhotoPage(image: imageC);
+    }));
+  }
 
   @override
   void dispose() {
@@ -95,9 +107,6 @@ class PhotosPageState extends State<PhotosPage> {
       //reached bottom , fetch new images
       print("Fetching new images");
       ImagesAction.of(context).fetchImages();
-      setState(() {
-        x++;
-      });
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {

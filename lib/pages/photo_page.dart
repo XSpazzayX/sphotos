@@ -19,12 +19,15 @@ class PhotoPageState extends State<PhotoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(children: [
-        Hero(
-            tag: "PhotoHero",
-            child: CachedNetworkImage(
-                width: 150, height: 150, imageUrl: widget.image.imageUrl)),
-        Text("${widget.image.authorUsername}")
+      body: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Expanded(
+            child: Hero(
+                tag: widget.image,
+                child: CachedNetworkImage(
+                    fit:BoxFit.cover,imageUrl: widget.image.imageUrl))),
+        Padding(
+            padding: EdgeInsets.all(12),
+            child:Text("${widget.image.authorUsername}",style: TextStyle(fontSize: 32),)),
       ]),
     );
   }
