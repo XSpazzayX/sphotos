@@ -17,16 +17,16 @@ class ListPhotoTile extends StatefulWidget {
 class ListPhotoTileState extends State<ListPhotoTile> {
   @override
   Widget build(BuildContext context) {
-    return new Row(
+    return  Row(
       children: <Widget>[
-        new Expanded(
-          child: new Padding(
+         Expanded(
+          child:  Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
-            child: new Column(
+            child:  Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Text(
+                 Text(
                   widget.image.authorUsername,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -38,27 +38,27 @@ class ListPhotoTileState extends State<ListPhotoTile> {
             ),
           ),
         ),
-        new Container(
+         Container(
           height: 150.0,
           width: 150.0,
           child: Stack(
             children: <Widget>[
-              new Transform.translate(
-                offset: new Offset(50.0, 0.0),
-                child: new Container(
+               Transform.translate(
+                offset:  Offset(50.0, 0.0),
+                child:  Container(
                   height: 100.0,
                   width: 100.0,
                   color: Colors.blue,
                 ),
               ),
-              new Transform.translate(
+               Transform.translate(
                 offset: Offset(10.0, 20.0),
-                child: new Card(
+                child:  Card(
                   elevation: 20.0,
-                  child: new Container(
+                  child:  Container(
                     height: 120.0,
                     width: 120.0,
-                    decoration: new BoxDecoration(
+                    decoration:  BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
                             width: 10.0,

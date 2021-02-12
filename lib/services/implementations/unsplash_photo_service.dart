@@ -27,6 +27,9 @@ class UnsplashPhotoService implements PhotoService {
       return ImageE.fromJson(image);
     }).toList();
     images$.add(imageList);
+    for(ImageE image in imageList){
+      print(image);
+    }
   }
 
   UnsplashPhotoService(this.images$) {}

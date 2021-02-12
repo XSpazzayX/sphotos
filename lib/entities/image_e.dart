@@ -16,4 +16,8 @@ class ImageE {
         alt_description = json["alt_description"],
         description = json["description"];
 
+  @override
+  String toString() {
+    return 'ImageE{id: $id, urls: $urls, userE: $userE, alt_description: $alt_description, description: $description}';
+  }
 }
