@@ -1,9 +1,11 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphotos/actions/fetch_images.dart';
 import 'package:sphotos/consumables/image_c.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:sphotos/helpers/ad_manager.dart';
 import 'package:sphotos/pages/photo_page.dart';
 
 class PhotosPage extends StatefulWidget {
@@ -17,10 +19,39 @@ class PhotosPage extends StatefulWidget {
 
 class PhotosPageState extends State<PhotosPage> {
   ScrollController _controller;
+  InterstitialAd _interstitialAd;
+  int timesTapped = 0;
+  Future<void> _loadInterstitialAd()async{
+    print("loading ad");
+    final _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+     _interstitialAd..load()..show() ;
+  }
+  void _onInterstitialAdEvent(MobileAdEvent event){
+    switch(event){
+      case MobileAdEvent.loaded:
+        break;
+      case MobileAdEvent.closed:
+        print("closed");
+        _interstitialAd?.dispose();
+        break;
+      case MobileAdEvent.failedToLoad:
+        print("Failed to load");
+        _interstitialAd?.dispose();
+        break;
+      default:
+        print("Default");
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     ImagesAction.of(context).fetchImages();
@@ -52,6 +83,7 @@ class PhotosPageState extends State<PhotosPage> {
                       width: double.infinity,
                       height:500,
                       child: GestureDetector(
+                          onTap: _handleTap,
                           onLongPress: () => showImageDetails(images[index]),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -80,6 +112,15 @@ class PhotosPageState extends State<PhotosPage> {
       )),
     );
   }
+  void _handleTap() async{
+    timesTapped++;
+    print("TimesTapped-$timesTapped");
+    if(timesTapped == 3){
+      await _loadInterstitialAd();
+      timesTapped = 0;
+    }
+
+  }
 
   void showImageDetails(ImageC imageC) {
     print("pressed");
@@ -92,6 +133,7 @@ class PhotosPageState extends State<PhotosPage> {
   void dispose() {
     // TODO: implement dispose
     _controller.dispose();
+    _interstitialAd?.dispose();
     super.dispose();
   }
 

@@ -1,9 +1,14 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphotos/pages/home_page.dart';
 import 'package:sphotos/pages/photos_page.dart';
 import 'package:sphotos/providers/provider.dart';
+
+import 'helpers/ad_manager.dart';
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseAdMob.instance.initialize(appId: AdManager.appId);
   Provider.debugCheckInvalidValueType = <T>(T value) {
     return true;
   };
