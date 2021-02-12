@@ -75,14 +75,14 @@ class PhotosPageState extends State<PhotosPage> {
                 controller: _controller,
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
-
                   return GestureDetector(
                     onTap: _handleTap,
-                    onLongPress: ()=>showImageDetails(images[index]),
-                    child:Padding(
-                      padding: EdgeInsets.only(top:10),
-                    child:ListPhotoTile(image: images[index],)
-                    )
+                    onLongPress: () => showImageDetails(images[index]),
+                    child: Padding(
+                        padding: EdgeInsets.only(top: 10),
+                        child: ListPhotoTile(
+                          image: images[index],
+                        )),
                   );
                 },
               ),
@@ -121,7 +121,6 @@ class PhotosPageState extends State<PhotosPage> {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       //reached bottom , fetch new images
-      print("Scrolled to bottom");
       ImagesAction.of(context).fetchImages();
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&

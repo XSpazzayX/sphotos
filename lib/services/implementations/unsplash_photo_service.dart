@@ -10,27 +10,24 @@ import 'package:sphotos/services/interfaces/photo_service.dart';
 class UnsplashPhotoService implements PhotoService {
   final _apiKey = "2VECU03133zjfwsbibuukS9E1wYOTdvVnsP2CyUqWTk";
   final PublishSubject<List<ImageE>> images$;
+  final DioCacheManager dioCacheManager =
+      DioCacheManager(CacheConfig(baseUrl: "https://api.unsplash.com/photos"));
+  final Options cacheOptions = buildCacheOptions(Duration(days: 7));
+  final Dio dio = Dio();
 
   @override
   Future<void> fetchNewImages(int page) async {
-    print("In service fetching images");
-    final DioCacheManager dioCacheManager = DioCacheManager(CacheConfig(baseUrl: "https://api.unsplash.com/photos"));
-    final Options cacheOptions = buildCacheOptions(Duration(days: 7));
-    Dio dio = Dio();
-    dio.interceptors.add(dioCacheManager.interceptor);
     final response = await dio.get("https://api.unsplash.com/photos",
         queryParameters: {"client_id": _apiKey, "page": page, "per_page": 10},
         options: cacheOptions);
-    final List<dynamic> images =
-        response.data;
-    List<ImageE> imageList = images.map((image){
+    final List<dynamic> images = response.data;
+    List<ImageE> imageList = images.map((image) {
       return ImageE.fromJson(image);
     }).toList();
     images$.add(imageList);
-    for(ImageE image in imageList){
-      print(image);
-    }
   }
 
-  UnsplashPhotoService(this.images$) {}
+  UnsplashPhotoService(this.images$) {
+    dio.interceptors.add(dioCacheManager.interceptor);
+  }
 }

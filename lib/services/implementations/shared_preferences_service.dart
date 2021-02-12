@@ -20,7 +20,6 @@ class SharedPreferencesService extends StorageService {
 
   @override
   Future<void> saveLoginFirstTime() async {
-    // TODO: implement saveLoginFirstTime
     final SharedPreferences prefs = await this._prefs;
     await prefs.setBool("first_login", false);
     LoginHistoryE loginHistoryE = await getLoginHistory();

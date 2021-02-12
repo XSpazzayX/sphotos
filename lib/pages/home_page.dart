@@ -28,18 +28,26 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Consumer<ConnectionC>(builder: (context, o, _) {
           if (o == null) {
-            return Container(color: Colors.blue);
+            return Image(
+              image: AssetImage("assets/images/camera_background.jpeg"),
+            );
           } else if (o.isFirstTime && o.isConnected) {
             StorageAction.of(context).saveLoginFirstTime();
-            return Container(color: Colors.blue);
+            Future.microtask(() => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => PhotosPage())));
+            return Image(
+              image: AssetImage("assets/images/camera_background.jpeg"),
+            );
           } else if (o.isFirstTime && !o.isConnected) {
-            return Center(child: Text("Please turn on your internet."));
+            return Center(
+                child:
+                    Text("Please turn on your internet for the first login."));
           } else {
-            Future.microtask(() => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => PhotosPage())
-            ));
-            return Center(child:Text("Welcome"));
+            Future.microtask(() => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => PhotosPage())));
+            return Image(
+              image: AssetImage("assets/images/camera_background.jpeg"),
+            );
           }
         }));
   }
