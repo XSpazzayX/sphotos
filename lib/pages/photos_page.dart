@@ -1,4 +1,4 @@
-import 'package:firebase_admob/firebase_admob.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,39 +19,32 @@ class PhotosPage extends StatefulWidget {
 
 class PhotosPageState extends State<PhotosPage> {
   ScrollController _controller;
-  InterstitialAd _interstitialAd;
+  AdmobInterstitial interstitialAd;
   int timesTapped = 0;
   Future<void> _loadInterstitialAd()async{
     print("loading ad");
-    final _interstitialAd = InterstitialAd(
-      adUnitId: AdManager.interstitialAdUnitId,
-      listener: _onInterstitialAdEvent,
-    );
-     _interstitialAd..load()..show() ;
+    await interstitialAd.isLoaded ? interstitialAd.show() : print("failed to load");
   }
-  void _onInterstitialAdEvent(MobileAdEvent event){
-    switch(event){
-      case MobileAdEvent.loaded:
-        break;
-      case MobileAdEvent.closed:
-        print("closed");
-        _interstitialAd?.dispose();
-        break;
-      case MobileAdEvent.failedToLoad:
-        print("Failed to load");
-        _interstitialAd?.dispose();
-        break;
+  void handleEvent(
+      AdmobAdEvent event, Map<String, dynamic> args, String adType) {
+    switch (event) {
       default:
-        print("Default");
+        print(event);
+        break;
     }
   }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
+    interstitialAd = AdmobInterstitial(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+        if (event == AdmobAdEvent.closed) interstitialAd.load();
+        handleEvent(event, args, 'Interstitial');
+      },
+    );
+    interstitialAd.load();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     ImagesAction.of(context).fetchImages();
@@ -132,8 +125,8 @@ class PhotosPageState extends State<PhotosPage> {
   @override
   void dispose() {
     // TODO: implement dispose
+    interstitialAd.dispose();
     _controller.dispose();
-    _interstitialAd?.dispose();
     super.dispose();
   }
 
