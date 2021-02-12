@@ -64,10 +64,8 @@ class PhotosPageState extends State<PhotosPage> {
       ),
       body: Container(child: Consumer<List<ImageC>>(
         builder: (context, images, _) {
-          if (images == null) {
+          if (images == null || images.length == 0) {
             return CircularProgressIndicator();
-          } else if (images.length == 0) {
-            return Container(child: Text("Empty list"));
           }
           return Column(children: [
             Expanded(

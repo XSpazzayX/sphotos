@@ -30,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if (o == null) {
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
+              fit: BoxFit.cover,
             );
           } else if (o.isFirstTime && o.isConnected) {
             StorageAction.of(context).saveLoginFirstTime();
@@ -37,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => PhotosPage())));
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
+              fit: BoxFit.cover,
             );
           } else if (o.isFirstTime && !o.isConnected) {
             return Center(
@@ -47,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => PhotosPage())));
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
+              fit: BoxFit.cover,
             );
           }
         }));
