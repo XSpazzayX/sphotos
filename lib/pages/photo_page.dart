@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../consumables/image_c.dart';
 
 class PhotoPage extends StatefulWidget {
@@ -27,7 +28,10 @@ class PhotoPageState extends State<PhotoPage> {
                     fit:BoxFit.cover,imageUrl: widget.image.imageUrl))),
         Padding(
             padding: EdgeInsets.all(12),
-            child:Text("${widget.image.authorUsername}",style: TextStyle(fontSize: 32),)),
+            child:Text(
+              "${widget.image.description}",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 32),)),
       ]),
     );
   }

@@ -7,6 +7,7 @@ import 'package:sphotos/consumables/image_c.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:sphotos/helpers/ad_manager.dart';
 import 'package:sphotos/pages/photo_page.dart';
+import 'package:sphotos/widgets/ListPhotoTile.dart';
 
 class PhotosPage extends StatefulWidget {
   @override
@@ -74,25 +75,15 @@ class PhotosPageState extends State<PhotosPage> {
                 controller: _controller,
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      color: Colors.red,
-                      width: double.infinity,
-                      child: GestureDetector(
-                        onTap: _handleTap,
-                        onLongPress: () => showImageDetails(images[index]),
-                        child: Column(children: [
-                          Text("${images[index].authorUsername}"),
-                          CachedNetworkImage(
-                            height: 500,
-                            fit: BoxFit.fill,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            imageUrl: images[index].thumbnailUrl,
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          )
-                        ]),
-                      ));
+
+                  return GestureDetector(
+                    onTap: _handleTap,
+                    onLongPress: ()=>showImageDetails(images[index]),
+                    child:Padding(
+                      padding: EdgeInsets.only(top:10),
+                    child:ListPhotoTile(image: images[index],)
+                    )
+                  );
                 },
               ),
             )

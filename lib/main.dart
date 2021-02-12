@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
         child: MaterialApp(
-            title: 'Flutter Demo',
+            title: 'sphotos',
             theme: ThemeData(
               // This is the theme of your application.
               //
