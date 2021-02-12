@@ -21,10 +21,14 @@ class PhotosPageState extends State<PhotosPage> {
   ScrollController _controller;
   AdmobInterstitial interstitialAd;
   int timesTapped = 0;
-  Future<void> _loadInterstitialAd()async{
+
+  Future<void> _loadInterstitialAd() async {
     print("loading ad");
-    await interstitialAd.isLoaded ? interstitialAd.show() : print("failed to load");
+    await interstitialAd.isLoaded
+        ? interstitialAd.show()
+        : print("failed to load");
   }
+
   void handleEvent(
       AdmobAdEvent event, Map<String, dynamic> args, String adType) {
     switch (event) {
@@ -33,6 +37,7 @@ class PhotosPageState extends State<PhotosPage> {
         break;
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -48,7 +53,6 @@ class PhotosPageState extends State<PhotosPage> {
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     ImagesAction.of(context).fetchImages();
-
   }
 
   @override
@@ -71,32 +75,24 @@ class PhotosPageState extends State<PhotosPage> {
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    padding: EdgeInsets.only(top: 20),
                       color: Colors.red,
                       width: double.infinity,
-                      height:500,
                       child: GestureDetector(
-                          onTap: _handleTap,
-                          onLongPress: () => showImageDetails(images[index]),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Row(children: [
-                                Expanded(
-                                  child: CachedNetworkImage(
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(),
-                                    imageUrl: images[index].thumbnailUrl,
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                ),
-                              ])),
-                              Text("${images[index].authorUsername}"),
-                            ],
-                          )));
+                        onTap: _handleTap,
+                        onLongPress: () => showImageDetails(images[index]),
+                        child: Column(children: [
+                          Text("${images[index].authorUsername}"),
+                          CachedNetworkImage(
+                            height: 500,
+                            fit: BoxFit.fill,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            imageUrl: images[index].thumbnailUrl,
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )
+                        ]),
+                      ));
                 },
               ),
             )
@@ -105,14 +101,14 @@ class PhotosPageState extends State<PhotosPage> {
       )),
     );
   }
-  void _handleTap() async{
+
+  void _handleTap() async {
     timesTapped++;
     print("TimesTapped-$timesTapped");
-    if(timesTapped == 3){
+    if (timesTapped == 3) {
       await _loadInterstitialAd();
       timesTapped = 0;
     }
-
   }
 
   void showImageDetails(ImageC imageC) {
