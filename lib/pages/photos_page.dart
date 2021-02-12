@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sphotos/actions/fetch_images.dart';
 import 'package:sphotos/consumables/image_c.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:sphotos/helpers/ad_manager.dart';
 import 'package:sphotos/pages/photo_page.dart';
 import 'package:sphotos/widgets/ListPhotoTile.dart';
