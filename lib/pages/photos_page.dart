@@ -64,7 +64,7 @@ class PhotosPageState extends State<PhotosPage> {
       body: Container(child: Consumer<List<ImageC>>(
         builder: (context, images, _) {
           if (images == null || images.length == 0) {
-            return CircularProgressIndicator();
+            return Container();
           }
           return Column(children: [
             Expanded(
@@ -72,7 +72,7 @@ class PhotosPageState extends State<PhotosPage> {
                 controller: _controller,
                 itemCount: images.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
+                  return InkWell(
                     onTap: _handleTap,
                     onLongPress: () => showImageDetails(images[index]),
                     child: Padding(
@@ -100,7 +100,6 @@ class PhotosPageState extends State<PhotosPage> {
   }
 
   void showImageDetails(ImageC imageC) {
-    print("pressed");
     Navigator.push(context, MaterialPageRoute(builder: (_) {
       return PhotoPage(image: imageC);
     }));

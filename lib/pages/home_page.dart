@@ -23,14 +23,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Home page"),
-        ),
         body: Consumer<ConnectionC>(builder: (context, o, _) {
           if (o == null) {
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
-              fit: BoxFit.cover,
+              height: double.infinity,
+              fit: BoxFit.fill,
             );
           } else if (o.isFirstTime && o.isConnected) {
             StorageAction.of(context).saveLoginFirstTime();
@@ -38,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => PhotosPage())));
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
-              fit: BoxFit.cover,
+              height: double.infinity,
+              fit: BoxFit.fill,
             );
           } else if (o.isFirstTime && !o.isConnected) {
             return Center(
@@ -49,7 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => PhotosPage())));
             return Image(
               image: AssetImage("assets/images/camera_background.jpeg"),
-              fit: BoxFit.cover,
+              height: double.infinity,
+              fit: BoxFit.fill,
             );
           }
         }));

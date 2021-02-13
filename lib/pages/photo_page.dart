@@ -36,7 +36,7 @@ class PhotoPageState extends State<PhotoPage> {
                               imageUrl: widget.image.thumbnailUrl,
                             ),
                             Positioned(
-                                top: 100,
+                                top: 200,
                                 child: SizedBox(
                                   height: 50,
                                   width: 50,
