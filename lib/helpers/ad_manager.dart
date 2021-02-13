@@ -13,7 +13,7 @@ class AdManager {
 
   static String get interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return "ca-app-pub-3940256099942544/1033173712";
+      return "ca-app-pub-3940256099942544/7049598008";
     } else {
       throw new UnsupportedError("Unsupported platform");
     }
