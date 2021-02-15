@@ -7,13 +7,6 @@ class PhotoStore {
   final BehaviorSubject<List<ImageC>> imagesO$ =
       BehaviorSubject.seeded(List<ImageC>.empty(growable: true));
   int _pageNum = 1;
-  int _lastFetched = 0;
-
-  int get lastFetched => _lastFetched;
-
-  set lastFetched(int value) {
-    _lastFetched = value;
-  }
 
   set pageNum(int value) {
     _pageNum = value;
@@ -29,9 +22,7 @@ class PhotoStore {
       }).toList();
       List<ImageC> currentValue = imagesO$.value.toList(growable: true);
       currentValue.addAll(newImages);
-      _lastFetched = pageNum;
       imagesO$.add(currentValue);
-      _pageNum += 1;
     });
   }
 
