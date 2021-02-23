@@ -42,8 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (connectionC.isFirstTime && connectionC.isConnected) {
       StorageAction.of(context).saveLoginFirstTime();
     } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => PhotosPage()));
+      Future.delayed(
+          Duration(milliseconds: 1200),
+          () => Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => PhotosPage())));
     }
   }
 
