@@ -2,7 +2,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sphotos/actions/fetch_images.dart';
+import 'package:sphotos/actions/images_action.dart';
 import 'package:sphotos/consumables/image_c.dart';
 import 'package:sphotos/helpers/ad_manager.dart';
 import 'package:sphotos/pages/photo_page.dart';

@@ -5,22 +5,24 @@ import 'package:sphotos/entities/connection_e.dart';
 import 'package:sphotos/entities/login_history_e.dart';
 
 class ConnectionStore {
-  final BehaviorSubject<ConnectionE> connectionE$;
-  final BehaviorSubject<LoginHistoryE> loginHistoryE$;
-  final BehaviorSubject<ConnectionC> connectionO$ = BehaviorSubject();
+  final BehaviorSubject<ConnectionE> _connectionE$;
+  final BehaviorSubject<LoginHistoryE> _loginHistoryE$;
+  final BehaviorSubject<ConnectionC> _connectionO$ = BehaviorSubject();
 
-  ConnectionStore(this.connectionE$, this.loginHistoryE$) {
+  ConnectionStore(this._connectionE$, this._loginHistoryE$) {
     CombineLatestStream.combine2(
-            connectionE$.stream,
-            loginHistoryE$.stream,
+            _connectionE$.stream,
+            _loginHistoryE$.stream,
             (ConnectionE connectionE, LoginHistoryE loginHistoryE) =>
                 ConnectionC(connectionE.isConnected, loginHistoryE.isFirstTime))
         .listen((connectionC) {
-      connectionO$.add(connectionC);
+      _connectionO$.add(connectionC);
     });
   }
 
   void dispose() {
-    connectionO$.close();
+    _connectionO$.close();
   }
+
+  BehaviorSubject<ConnectionC> get connectionO$ => _connectionO$;
 }
