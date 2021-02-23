@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Image(
         image: AssetImage("assets/images/camera_background.jpeg"),
         height: double.infinity,
-        fit: BoxFit.fill,
+        fit: BoxFit.cover,
       ),
     );
   }

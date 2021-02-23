@@ -22,7 +22,7 @@ class PhotoPageState extends State<PhotoPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 1000,
+            expandedHeight: 600,
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
